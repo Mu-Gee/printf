@@ -1,50 +1,42 @@
-#ifndef MAIN_H
-#define MAIN_H
-
+#ifndef _PRINT_FUNCTION_H_
+#define _PRINT_FUNCTION_H_
 #include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <ctype.h>
-
-
-/**
- * struct conversion - struct for conversion specifiers
- * @specifier: the conversion specifier
- * @convert: the function associated with conversion specifier
- */
-typedef struct conversion
-{
-    char *specifier;
-    char *(*convert)(va_list);
-} converter_t;
 
 int _printf(const char *format, ...);
+int pull_print(char c, va_list *ap);
 
-/* Conversion Functions */
-char *convert_char(va_list);
-char *convert_str(va_list);
-char *convert_integer(va_list);
-char *convert_binary(va_list);
-char *convert_unsigned(va_list);
-char *convert_octal(va_list);
-char *convert_hex(va_list);
-char *convert_hex_upper(va_list);
-char *convert_non_printable(va_list);
-char *convert_address(va_list);
-char *convert_rev(va_list);
-char *convert_rot13(va_list);
-char *convert_to_base(unsigned int num, int base, int uppercase);
+int _putchar(char);
+int buffer(char a, char *s);
+int p_bin(unsigned int num);
+int exponent(int x, int y);
+int p_int(int);
+int p_string(char *);
+int p_hexstring(char *);
+int p_rev(char *s);
+int p_hexcap(unsigned int num);
+int p_octal(unsigned int num);
+int p_uint(unsigned int num);
+int p_hex(unsigned int num);
 
-/** Helper Functions*/
-int _putchar(char c);
-int _strlen(char *s);
-int num_len(int n);
-char *handler(char format, va_list ap);
-int parser(const char *format, va_list ap);
-void reverse_string(char *s);
-int is_printable(char c);
-char *handle_unknown(char format, va_list ap);
+int mkstring(va_list *);
+int mkchar(va_list *);
+int mkint(va_list *);
+int mkbin(va_list *);
+int mkhex(va_list *);
+int mkhexcap(va_list *);
+int mkoctal(va_list *);
+int mkhexstring(va_list *);
+int mkunsigned(va_list *);
 
+/**
+ * struct flag -flag object
+ * @letter: flag char
+ * @prnt: print function pointer
+ * Descriptions: contains flag letter and corresponding print function
+ **/
+typedef struct flag
+{
+	char letter;
+	int (*prnt)(va_list *);
+} find_flag;
 #endif
