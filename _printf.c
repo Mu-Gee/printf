@@ -1,31 +1,24 @@
 #include "main.h"
 
 /**
- * _printf - print string as printf
- * @format: number of arguments
- * Return: void
- **/
+* _printf - print output according to a format.
+* @format: string to print.
+*
+* Return: number of characters printed.
+*/
 int _printf(const char *format, ...)
 {
-	va_list ap;
-	unsigned int i, result;
+va_list ap;
+int count = 0;
 
-	result = 0;
-	va_start(ap, format);
+if (format == NULL)
+return (-1);
 
-	for (i = 0; format[i] != '\0'; i++)
-	{
-		if (format[i] == '%')
-		{
-			result += pull_print(format[i + 1], &ap);
-			i++;
-		}
-		else
-		{
-			_putchar(format[i]);
-			result++;
-		}
-	}
-	va_end(ap);
-	return (result);
+va_start(ap, format);
+
+count = parser(format, ap);
+
+va_end(ap);
+
+return (count);
 }
