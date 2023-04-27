@@ -1,50 +1,31 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * _printf - prints formatted data to stdout
- * @format: string that contains the format to print
- * Return: number of characters written
- */
-int _printf(char *format, ...)
+ * _printf - print string as printf
+ * @format: number of arguments
+ * Return: void
+ **/
+int _printf(const char *format, ...)
 {
-	int written = 0, (*structype)(char *, va_list);
-	char q[3];
-	va_list pa;
+	va_list ap;
+	unsigned int i, result;
 
-	if (format == NULL)
-		return (-1);
-	q[2] = '\0';
-	va_start(pa, format);
-	_putchar(-1);
-	while (format[0])
+	result = 0;
+	va_start(ap, format);
+
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (format[0] == '%')
+		if (format[i] == '%')
 		{
-			structype = driver(format);
-			if (structype)
-			{
-				q[0] = '%';
-				q[1] = format[1];
-				written += structype(q, pa);
-			}
-			else if (format[1] != '\0')
-			{
-				written += _putchar('%');
-				written += _putchar(format[1]);
-			}
-			else
-			{
-				written += _putchar('%');
-				break;
-			}
-			format += 2;
+			result += pull_print(format[i + 1], &ap);
+			i++;
 		}
 		else
 		{
-			written += _putchar(format[0]);
-			format++;
+			_putchar(format[i]);
+			result++;
 		}
 	}
-	_putchar(-2);
-	return (written);
+	va_end(ap);
+	return (result);
 }
