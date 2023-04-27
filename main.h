@@ -1,42 +1,36 @@
 #ifndef _PRINT_FUNCTION_H_
 #define _PRINT_FUNCTION_H_
+
 #include <stdarg.h>
-
-int _printf(const char *format, ...);
-int pull_print(char c, va_list *ap);
-
-int _putchar(char);
-int buffer(char a, char *s);
-int p_bin(unsigned int num);
-int exponent(int x, int y);
-int p_int(int);
-int p_string(char *);
-int p_hexstring(char *);
-int p_rev(char *s);
-int p_hexcap(unsigned int num);
-int p_octal(unsigned int num);
-int p_uint(unsigned int num);
-int p_hex(unsigned int num);
-
-int mkstring(va_list *);
-int mkchar(va_list *);
-int mkint(va_list *);
-int mkbin(va_list *);
-int mkhex(va_list *);
-int mkhexcap(va_list *);
-int mkoctal(va_list *);
-int mkhexstring(va_list *);
-int mkunsigned(va_list *);
+#include <stddef.h>
+#include <stdlib.h>
 
 /**
- * struct flag -flag object
- * @letter: flag char
- * @prnt: print function pointer
- * Descriptions: contains flag letter and corresponding print function
- **/
-typedef struct flag
+ * struct structprint - structure containing
+ * @q: the location and method to translate data to characters.
+ * @u: print function for specific type.
+ *
+ * Return: int
+ */
+typedef struct structprint
 {
-	char letter;
-	int (*prnt)(va_list *);
-} find_flag;
+	char *q;
+	int (*u)(char *format, va_list);
+} structype;
+
+int _putchar(char ch);
+int _puts(char *string);
+int printc(char *format, va_list);
+int printstr(char *format, va_list);
+int (*driver(char *format))(char *format, va_list);
+int _printf(char *format, ...);
+int printint(char *format, va_list pa);
+int integer(int number);
+int contadordigit(int number);
+int _abs(int number);
+int printpercent(char *format, va_list pa);
+int printhex(char *format, va_list);
+int printHEX(char *format, va_list);
+int printocta(char *format, va_list);
+int print_unsign(char *format, va_list);
 #endif
